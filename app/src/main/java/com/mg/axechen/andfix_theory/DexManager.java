@@ -79,7 +79,9 @@ public class DexManager {
                 Class clazz = Class.forName(wrongClass);
                 Method wrongMethod = clazz.getDeclaredMethod(wrongMethodName, rightMethod.getParameterTypes());
                 if (Build.VERSION.SDK_INT <= 18) {
-                    replace(Build.VERSION.SDK_INT ,wrongMethod, rightMethod);
+                    replaceDalvik(Build.VERSION.SDK_INT ,wrongMethod, rightMethod);
+                }else{
+                    replaceArt(wrongMethod,rightMethod);
                 }
 
             } catch (Exception e) {
@@ -89,7 +91,9 @@ public class DexManager {
     }
 
 
-    public native void replace(int sdk, Method wrongMethod, Method rightMethod);
+    public native void replaceDalvik(int sdk, Method wrongMethod, Method rightMethod);
+
+    public native void replaceArt(Method wrongMethod, Method rightMethod);
 
     static {
         System.loadLibrary("native-lib");

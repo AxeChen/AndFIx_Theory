@@ -1,5 +1,6 @@
 package com.mg.axechen.andfix_theory;
 
+import android.os.Build;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -31,12 +32,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void fixBug(View view) {
-        String path = Environment.getExternalStorageDirectory().getAbsolutePath();
-        Log.i("fixBug", path);
-        File file = new File("/sdcard/Download", "out.dex");
-        if (file.exists()) {
-            DexManager.getInstance().loadFile(file);
-        }
+        // TODO 注意 我这边这样写是因为Genymotion的模拟器的低版本和高版本路劲不一样.低版本的时候adp push命令没有权限。所以写死目录。
+        String path = "/sdcard/Download";
+        DexManager.getInstance().loadFile(new File(path, "out.dex"));
     }
 
 }
